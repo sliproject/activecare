@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ActiveCare — Minyak Angin Aromatherapy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:      #2D6A4F;
+    --green-light:#52B788;
+    --green-pale: #D8F3DC;
+    --red:        #C0392B;
+    --orange:     #E67E22;
+    --dark:       #1A1A1A;
+    --gray:       #6B7280;
+    --light:      #F8FAF8;
+    --white:      #FFFFFF;
+    --border:     #E5EDE8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--dark);
+    background: var(--white);
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo-circle {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--white); border: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .logo-circle svg { width: 32px; height: 32px; }
+  .logo-text { line-height: 1.1; }
+  .logo-text strong {
+    font-family: 'Inter', sans-serif; font-weight: 700; font-size: 16px;
+    color: var(--red);
+  }
+  .logo-text strong span { color: var(--orange); }
+  .logo-text small {
+    display: block; font-size: 9px; font-weight: 500;
+    color: var(--gray); letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--dark);
+    text-decoration: none; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+  .nav-buy {
+    background: var(--green); color: var(--white);
+    font-size: 13px; font-weight: 600;
+    padding: 10px 22px; border-radius: 50px; border: none;
+    cursor: pointer; text-decoration: none;
+    transition: background .2s, transform .15s;
+  }
+  .nav-buy:hover { background: #1B4D38; transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { width: 22px; height: 2px; background: var(--dark); border-radius: 2px; display: block; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    padding: 100px 5% 60px;
+    display: flex; align-items: center;
+    background: var(--light);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -120px; right: -120px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: var(--green-pale); opacity: .5;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -80px; left: -80px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: #FEF3E8; opacity: .6;
+  }
+  .hero-inner {
+    width: 100%; max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .hero-visual {
+    display: flex; justify-content: center; align-items: center;
+    position: relative;
+  }
+  .hero-product-wrap {
+    width: 280px; height: 360px;
+    background: linear-gradient(145deg, #E8F5E9, #C8E6C9);
+    border-radius: 32px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .product-bottle {
+    width: 100px; height: 220px;
+    background: linear-gradient(180deg, #F0F8FF 0%, #E0F0FF 40%, #D0E8FF 100%);
+    border-radius: 12px 12px 16px 16px;
+    position: relative; box-shadow: 0 8px 32px rgba(0,0,0,.12);
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .bottle-cap {
+    width: 28px; height: 18px; border-radius: 50%;
+    background: #B0C4D8; position: absolute; top: -12px;
+  }
+  .bottle-label {
+    position: absolute; top: 24px; left: 8px; right: 8px;
+    background: white; border-radius: 8px;
+    padding: 8px 6px; text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  }
+  .bottle-label-ac {
+    font-family: 'Inter', sans-serif; font-weight: 800; font-size: 11px;
+  }
+  .bottle-label-ac .r { color: var(--red); }
+  .bottle-label-ac .o { color: var(--orange); }
+  .bottle-label-sub {
+    font-size: 6px; color: #555; font-weight: 600;
+    letter-spacing: .04em; text-transform: uppercase; margin-top: 2px;
+    line-height: 1.3;
+  }
+  .bottle-leaf {
+    position: absolute; bottom: -20px; left: -30px;
+    font-size: 52px; transform: rotate(-20deg); opacity: .8;
+  }
+  .bottle-stone {
+    position: absolute; bottom: -10px; right: -20px;
+    font-size: 36px; opacity: .7;
+  }
+  .hero-badge {
+    position: absolute; top: 20px; right: -16px;
+    background: var(--white); border-radius: 12px;
+    padding: 10px 14px; box-shadow: 0 4px 16px rgba(0,0,0,.1);
+    font-size: 11px; font-weight: 600; color: var(--green);
+    white-space: nowrap;
+  }
+  .hero-badge::before { content: '🌿 '; }
+  .hero-badge2 {
+    position: absolute; bottom: 24px; left: -16px;
+    background: var(--white); border-radius: 12px;
+    padding: 10px 14px; box-shadow: 0 4px 16px rgba(0,0,0,.1);
+    font-size: 11px; font-weight: 600; color: var(--orange);
+    white-space: nowrap;
+  }
+  .hero-badge2::before { content: '✨ '; }
+
+  .hero-copy {}
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--green-pale); color: var(--green);
+    font-size: 12px; font-weight: 600; letter-spacing: .04em;
+    padding: 5px 14px; border-radius: 50px; margin-bottom: 20px;
+  }
+  .hero-eyebrow::before { content: '●'; font-size: 8px; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700; line-height: 1.15;
+    color: var(--dark); margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: normal; color: var(--red);
+  }
+  .hero-desc {
+    font-size: 15px; color: var(--gray);
+    line-height: 1.75; max-width: 420px; margin-bottom: 32px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn-main {
+    background: linear-gradient(135deg, var(--red), #E74C3C);
+    color: white; font-size: 14px; font-weight: 600;
+    padding: 14px 28px; border-radius: 50px; border: none;
+    cursor: pointer; text-decoration: none;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 4px 16px rgba(192,57,43,.35);
+  }
+  .btn-main:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(192,57,43,.4); }
+  .btn-sec {
+    background: transparent; color: var(--green);
+    font-size: 14px; font-weight: 600;
+    padding: 14px 28px; border-radius: 50px;
+    border: 1.5px solid var(--green);
+    cursor: pointer; text-decoration: none;
+    transition: background .2s, color .2s;
+  }
+  .btn-sec:hover { background: var(--green); color: white; }
+
+  /* ── TRUST BAR ── */
+  .trust {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 5%;
+  }
+  .trust-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-around; flex-wrap: wrap; gap: 16px;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 500; color: var(--dark);
+  }
+  .trust-icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--green-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  /* ── BENEFITS ── */
+  .benefits {
+    padding: 80px 5%;
+    background: var(--white);
+  }
+  .section-header { text-align: center; margin-bottom: 52px; }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 3vw, 38px); font-weight: 700;
+    color: var(--dark); margin-bottom: 12px;
+  }
+  .section-header p {
+    font-size: 15px; color: var(--gray);
+    max-width: 480px; margin: 0 auto; line-height: 1.7;
+  }
+
+  .benefits-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  }
+  .benefit-item { text-align: center; padding: 32px 24px; }
+  .benefit-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--green-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; margin: 0 auto 18px;
+  }
+  .benefit-item h3 {
+    font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--dark);
+  }
+  .benefit-item p { font-size: 13px; color: var(--gray); line-height: 1.65; }
+
+  /* ── PRODUCTS ── */
+  .products {
+    padding: 80px 5%;
+    background: var(--light);
+  }
+  .products-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    margin-top: 48px;
+  }
+  .product-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(45,106,79,.12);
+  }
+  .product-card-img {
+    height: 200px; display: flex; align-items: center; justify-content: center;
+    font-size: 56px; position: relative;
+  }
+  .product-card-img .sticker {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--red); color: white;
+    font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 50px;
+  }
+  .product-card-body { padding: 20px; }
+  .product-card-body h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .product-card-body p { font-size: 12px; color: var(--gray); margin-bottom: 14px; line-height: 1.55; }
+  .product-price {
+    font-size: 18px; font-weight: 700; color: var(--red); margin-bottom: 14px;
+  }
+  .product-price span { font-size: 12px; color: var(--gray); font-weight: 400; text-decoration: line-through; margin-left: 6px; }
+  .btn-cart {
+    width: 100%; background: var(--green); color: white;
+    font-size: 13px; font-weight: 600; padding: 11px;
+    border-radius: 50px; border: none; cursor: pointer;
+    transition: background .2s;
+  }
+  .btn-cart:hover { background: #1B4D38; }
+
+  /* ── HOW TO USE ── */
+  .howto {
+    padding: 80px 5%;
+    background: var(--white);
+  }
+  .howto-steps {
+    max-width: 900px; margin: 48px auto 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+  }
+  .step { text-align: center; }
+  .step-num {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--green); color: white;
+    font-size: 18px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 14px;
+  }
+  .step-icon { font-size: 28px; margin-bottom: 10px; }
+  .step h3 { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .step p { font-size: 12px; color: var(--gray); line-height: 1.55; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials {
+    padding: 80px 5%;
+    background: var(--light);
+  }
+  .testi-grid {
+    max-width: 1100px; margin: 48px auto 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .testi-card {
+    background: var(--white); border-radius: 16px; padding: 24px;
+    border: 1px solid var(--border);
+  }
+  .testi-stars { color: var(--orange); font-size: 14px; margin-bottom: 12px; }
+  .testi-text { font-size: 13px; color: var(--dark); line-height: 1.7; margin-bottom: 16px; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: 10px; }
+  .testi-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--green-pale); display: flex; align-items: center;
+    justify-content: center; font-size: 16px; font-weight: 600; color: var(--green);
+  }
+  .testi-name { font-size: 13px; font-weight: 600; }
+  .testi-loc { font-size: 11px; color: var(--gray); }
+
+  /* ── INGREDIENTS ── */
+  .ingredients {
+    padding: 80px 5%;
+    background: var(--green);
+    color: white;
+  }
+  .ingredients .section-header h2 { color: white; }
+  .ingredients .section-header p { color: rgba(255,255,255,.7); }
+  .ingr-grid {
+    max-width: 1100px; margin: 48px auto 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  }
+  .ingr-item {
+    background: rgba(255,255,255,.1);
+    border-radius: 16px; padding: 24px 16px; text-align: center;
+    border: 1px solid rgba(255,255,255,.15);
+  }
+  .ingr-icon { font-size: 36px; margin-bottom: 12px; }
+  .ingr-item h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .ingr-item p { font-size: 12px; color: rgba(255,255,255,.65); line-height: 1.55; }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 80px 5%;
+    background: var(--white);
+    text-align: center;
+  }
+  .cta-box {
+    max-width: 640px; margin: 0 auto;
+    background: linear-gradient(135deg, #FFF5F5, #FFF8F0);
+    border-radius: 28px; padding: 56px 40px;
+    border: 1px solid #FFD9D9;
+  }
+  .cta-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 700; margin-bottom: 14px; color: var(--dark);
+  }
+  .cta-box p { font-size: 15px; color: var(--gray); margin-bottom: 28px; line-height: 1.7; }
+  .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-wa {
+    background: #25D366; color: white; font-size: 14px; font-weight: 600;
+    padding: 14px 28px; border-radius: 50px; border: none; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: background .2s, transform .15s;
+    box-shadow: 0 4px 16px rgba(37,211,102,.3);
+  }
+  .btn-wa:hover { background: #1EA952; transform: translateY(-2px); }
+  .btn-toko {
+    background: var(--orange); color: white; font-size: 14px; font-weight: 600;
+    padding: 14px 28px; border-radius: 50px; border: none; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: background .2s, transform .15s;
+  }
+  .btn-toko:hover { background: #D35400; transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1A1A1A; color: rgba(255,255,255,.65);
+    padding: 48px 5% 24px;
+  }
+  .footer-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+    margin-bottom: 40px;
+  }
+  .footer-brand .logo-text strong { font-size: 18px; }
+  .footer-brand .logo-text strong .r { color: #E74C3C; }
+  .footer-brand .logo-text strong .o { color: var(--orange); }
+  .footer-brand .logo-text small { color: rgba(255,255,255,.4); }
+  .footer-brand p { font-size: 13px; margin-top: 14px; line-height: 1.7; max-width: 240px; }
+  .footer-col h4 { font-size: 13px; font-weight: 600; color: white; margin-bottom: 14px; }
+  .footer-col a {
+    display: block; font-size: 12px; color: rgba(255,255,255,.5);
+    text-decoration: none; margin-bottom: 8px; transition: color .2s;
+  }
+  .footer-col a:hover { color: white; }
+  .footer-bottom {
+    max-width: 1100px; margin: 0 auto;
+    border-top: 1px solid rgba(255,255,255,.1);
+    padding-top: 20px; display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 8px;
+  }
+  .footer-bottom p { font-size: 12px; }
+  .footer-socials { display: flex; gap: 12px; }
+  .footer-socials a {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,.1); display: flex; align-items: center;
+    justify-content: center; font-size: 14px; text-decoration: none;
+    transition: background .2s;
+  }
+  .footer-socials a:hover { background: var(--green); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-inner { grid-template-columns: 1fr; text-align: center; }
+    .hero-visual { order: -1; }
+    .hero-desc { margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .benefits-grid { grid-template-columns: 1fr; gap: 16px; }
+    .products-grid { grid-template-columns: 1fr 1fr; }
+    .howto-steps { grid-template-columns: repeat(2, 1fr); }
+    .testi-grid { grid-template-columns: 1fr; }
+    .ingr-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .hero-product-wrap { width: 220px; height: 280px; }
+    .product-bottle { width: 80px; height: 170px; }
+  }
+  @media (max-width: 600px) {
+    .products-grid { grid-template-columns: 1fr; }
+    .howto-steps { grid-template-columns: 1fr 1fr; }
+    .ingr-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .cta-box { padding: 36px 24px; }
+    .trust-inner { flex-direction: column; align-items: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-circle">
+      <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="22" cy="32" rx="11" ry="18" fill="#2D6A4F" transform="rotate(-15 22 32)"/>
+        <ellipse cx="22" cy="32" rx="6" ry="14" fill="#52B788" transform="rotate(-15 22 32)"/>
+        <ellipse cx="36" cy="28" rx="9" ry="16" fill="#4A90D9" transform="rotate(15 36 28)"/>
+        <circle cx="38" cy="12" r="5" fill="#5B9BD5"/>
+        <line x1="32" y1="16" x2="28" y2="44" stroke="#3A7BC8" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <strong><span class="r">Active</span><span class="o">Care</span></strong>
+      <small>Minyak Angin Aromatherapy</small>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#produk">Produk</a>
+    <a href="#manfaat">Manfaat</a>
+    <a href="#cara-pakai">Cara Pakai</a>
+    <a href="#testimoni">Testimoni</a>
+    <a href="#kontak">Kontak</a>
+  </div>
+  <a href="https://wa.me/6289666034638?text=Halo+saya+ingin+memesan+ActiveCare" class="nav-buy" target="_blank">Beli Sekarang</a>
+  <button class="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-visual">
+      <div class="hero-product-wrap">
+        <div class="product-bottle">
+          <div class="bottle-cap"></div>
+          <div class="bottle-label">
+            <div style="display:flex;align-items:center;justify-content:center;margin-bottom:4px">
+              <svg viewBox="0 0 30 30" width="20" height="20">
+                <ellipse cx="10" cy="16" rx="5" ry="9" fill="#2D6A4F" transform="rotate(-15 10 16)"/>
+                <ellipse cx="10" cy="16" rx="3" ry="7" fill="#52B788" transform="rotate(-15 10 16)"/>
+                <ellipse cx="18" cy="14" rx="4" ry="8" fill="#4A90D9" transform="rotate(15 18 14)"/>
+                <circle cx="19" cy="6" r="2.5" fill="#5B9BD5"/>
+              </svg>
+            </div>
+            <div class="bottle-label-ac"><span class="r">Active</span><span class="o">Care</span></div>
+            <div class="bottle-label-sub">Minyak Angin<br>Aromatherapy</div>
+          </div>
+        </div>
+        <div class="bottle-leaf">🌿</div>
+        <div class="bottle-stone">🪨</div>
+      </div>
+      <div class="hero-badge">100% Bahan Alami</div>
+      <div class="hero-badge2">Aroma Menenangkan</div>
+    </div>
+
+    <div class="hero-copy">
+      <div class="hero-eyebrow">Minyak Angin Herbal Premium</div>
+      <h1>Alami, <em>Segar</em>,<br>Menenangkan</h1>
+      <p class="hero-desc">
+        Rasakan kelegaan instan dengan ActiveCare — minyak angin aromatherapy berbahan daun mint pilihan dan minyak esensial murni. Formulasi unik untuk kesejahteraan Anda setiap hari.
+      </p>
+      <div class="hero-actions">
+        <a href="https://wa.me/6289666034638?text=Halo+saya+ingin+memesan+ActiveCare" class="btn-main" target="_blank">Beli Sekarang</a>
+        <a href="#manfaat" class="btn-sec">Pelajari Manfaatnya</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust">
+  <div class="trust-inner">
+    <div class="trust-item"><div class="trust-icon">🌿</div><span>Bahan Alami Pilihan</span></div>
+    <div class="trust-item"><div class="trust-icon">🧪</div><span>Tanpa Bahan Kimia Berbahaya</span></div>
+    <div class="trust-item"><div class="trust-icon">✅</div><span>Direkomendasikan Pengguna</span></div>
+    <div class="trust-item"><div class="trust-icon">🚚</div><span>Pengiriman Seluruh Indonesia</span></div>
+    <div class="trust-item"><div class="trust-icon">💬</div><span>Layanan Pelanggan Responsif</span></div>
+  </div>
+</div>
+
+<!-- MANFAAT -->
+<section class="benefits" id="manfaat">
+  <div class="section-header">
+    <h2>Mengapa Memilih ActiveCare?</h2>
+    <p>Manfaat nyata yang Anda rasakan sejak pemakaian pertama.</p>
+  </div>
+  <div class="benefits-grid">
+    <div class="benefit-item">
+      <div class="benefit-icon">🌬️</div>
+      <h3>Melegakan Pernapasan</h3>
+      <p>Kandungan menthol dan eucalyptus membantu melapangkan saluran pernapasan dan mengurangi hidung tersumbat.</p>
+    </div>
+    <div class="benefit-item">
+      <div class="benefit-icon">🧘</div>
+      <h3>Menenangkan Pikiran</h3>
+      <p>Aroma aromatherapy yang menyegarkan membantu meredakan stres dan membuat pikiran lebih rileks dan fokus.</p>
+    </div>
+    <div class="benefit-item">
+      <div class="benefit-icon">💪</div>
+      <h3>Meredakan Pegal & Mual</h3>
+      <p>Efektif meredakan pegal otot, mual perjalanan, dan ketidaknyamanan ringan untuk aktivitas sehari-hari.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUK -->
+<section class="products" id="produk">
+  <div class="section-header">
+    <h2>Pilihan Produk ActiveCare</h2>
+    <p>Tersedia dalam berbagai varian untuk kebutuhan Anda.</p>
+  </div>
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-card-img" style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9)">
+        🌿
+        <span class="sticker">Terlaris</span>
+      </div>
+      <div class="product-card-body">
+        <h3>ActiveCare Roll-On 8ml</h3>
+        <p>Formula roll-on praktis — tinggal oleskan di pergelangan tangan, leher, atau dada.</p>
+        <div class="product-price">Rp 25.000 <span>Rp 35.000</span></div>
+        <a href="https://wa.me/6289666034638?text=Pesan+ActiveCare+Roll-On+8ml" class="btn-cart" target="_blank">Pesan via WhatsApp</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img" style="background:linear-gradient(135deg,#FFF8E1,#FFECB3)">
+        🍃
+        <span class="sticker">Promo</span>
+      </div>
+      <div class="product-card-body">
+        <h3>ActiveCare Inhaler 1ml</h3>
+        <p>Inhaler stick untuk aroma terapi on-the-go — masuk saku, kapan saja bisa digunakan.</p>
+        <div class="product-price">Rp 15.000 <span>Rp 20.000</span></div>
+        <a href="https://wa.me/6289666034638?text=Pesan+ActiveCare+Inhaler+1ml" class="btn-cart" target="_blank">Pesan via WhatsApp</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img" style="background:linear-gradient(135deg,#FCE4EC,#F8BBD0)">
+        💜
+      </div>
+      <div class="product-card-body">
+        <h3>Paket Hemat 3 Roll-On</h3>
+        <p>Bundel 3 botol roll-on dengan harga spesial — cocok untuk keluarga atau kado.</p>
+        <div class="product-price">Rp 65.000 <span>Rp 90.000</span></div>
+        <a href="https://wa.me/6289666034638?text=Pesan+Paket+Hemat+3+Roll-On" class="btn-cart" target="_blank">Pesan via WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARA PAKAI -->
+<section class="howto" id="cara-pakai">
+  <div class="section-header">
+    <h2>Cara Menggunakan ActiveCare</h2>
+    <p>Sederhana dan praktis — bisa dilakukan di mana saja.</p>
+  </div>
+  <div class="howto-steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-icon">🤲</div>
+      <h3>Buka tutup</h3>
+      <p>Putar tutup roll-on dan pastikan roller bersih dan siap digunakan.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-icon">✋</div>
+      <h3>Oleskan</h3>
+      <p>Oleskan pada pergelangan tangan, pelipis, leher, atau area yang terasa pegal.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-icon">🌀</div>
+      <h3>Pijat ringan</h3>
+      <p>Pijat perlahan searah jarum jam selama 30 detik agar minyak meresap optimal.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-icon">😌</div>
+      <h3>Rasakan manfaatnya</h3>
+      <p>Nikmati sensasi segar dan menenangkan yang bekerja dalam hitungan menit.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BAHAN AKTIF -->
+<section class="ingredients">
+  <div class="section-header">
+    <h2>Bahan Aktif Pilihan</h2>
+    <p>Setiap tetes ActiveCare mengandung bahan alami berkualitas tinggi.</p>
+  </div>
+  <div class="ingr-grid">
+    <div class="ingr-item">
+      <div class="ingr-icon">🌿</div>
+      <h3>Peppermint Oil</h3>
+      <p>Memberikan sensasi dingin dan segar, membantu melegakan kepala dan pernapasan.</p>
+    </div>
+    <div class="ingr-item">
+      <div class="ingr-icon">🌲</div>
+      <h3>Eucalyptus Oil</h3>
+      <p>Anti-inflamasi alami yang membantu membuka saluran pernapasan dan meredakan batuk.</p>
+    </div>
+    <div class="ingr-item">
+      <div class="ingr-icon">🌸</div>
+      <h3>Lavender Oil</h3>
+      <p>Menenangkan sistem saraf, mengurangi kecemasan, dan membantu tidur lebih nyenyak.</p>
+    </div>
+    <div class="ingr-item">
+      <div class="ingr-icon">🫚</div>
+      <h3>Carrier Oil Alami</h3>
+      <p>Base oil yang lembut di kulit, membantu penyerapan optimal tanpa iritasi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONI -->
+<section class="testimonials" id="testimoni">
+  <div class="section-header">
+    <h2>Kata Mereka tentang ActiveCare</h2>
+    <p>Ribuan pelanggan puas telah merasakan manfaatnya.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Aromanya enak banget, tidak menyengat seperti minyak angin biasa. Langsung segar begitu dioleskan. Sekarang jadi andalan saya kalau pusing di perjalanan."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">S</div>
+        <div><div class="testi-name">Siti Rahayu</div><div class="testi-loc">Jakarta Selatan</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Saya kasih ke anak yang sering mual di mobil — manjur banget! Roll-on-nya praktis dibawa kemana-mana. Bakal repeat order terus nih."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">D</div>
+        <div><div class="testi-name">Dewi Anggraini</div><div class="testi-loc">Surabaya</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Packagingnya kece, aromanya premium. Udah coba banyak minyak angin, ActiveCare ini yang paling enak dan tahan lama efeknya. Recommended!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">A</div>
+        <div><div class="testi-name">Ahmad Fauzi</div><div class="testi-loc">Yogyakarta</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="kontak">
+  <div class="cta-box">
+    <h2>Siap Rasakan Manfaatnya?</h2>
+    <p>Pesan sekarang dan nikmati kesegaran ActiveCare. Pengiriman ke seluruh Indonesia dengan packaging aman.</p>
+    <div class="cta-actions">
+      <a href="https://wa.me/6289666034638?text=Halo+saya+ingin+memesan+ActiveCare+Minyak+Angin" class="btn-wa" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Pesan via WhatsApp
+      </a>
+      <a href="#produk" class="btn-toko">🛒 Lihat Semua Produk</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-text">
+        <strong><span class="r">Active</span><span class="o">Care</span></strong>
+        <small>Minyak Angin Aromatherapy</small>
+      </div>
+      <p>Produk herbal premium untuk kesehatan dan kesejahteraan Anda sehari-hari. Dibuat dari bahan alami pilihan terbaik.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Produk</h4>
+      <a href="#">Roll-On 8ml</a>
+      <a href="#">Inhaler 1ml</a>
+      <a href="#">Paket Hemat</a>
+    </div>
+    <div class="footer-col">
+      <h4>Informasi</h4>
+      <a href="#">Tentang Kami</a>
+      <a href="#">Cara Pembelian</a>
+      <a href="#">Kebijakan Retur</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kontak</h4>
+      <a href="https://wa.me/6289666034638" target="_blank">WhatsApp</a>
+      <a href="#">Instagram</a>
+      <a href="mailto:activecare.id@gmail.com">activecare.id@gmail.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 ActiveCare. Semua hak dilindungi.</p>
+    <div class="footer-socials">
+      <a href="#" title="Instagram">📸</a>
+      <a href="#" title="WhatsApp">💬</a>
+      <a href="#" title="TikTok">🎵</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelector('.hamburger').addEventListener('click', function() {
+    const links = document.querySelector('.nav-links');
+    if (links.style.display === 'flex') {
+      links.style.display = '';
+    } else {
+      links.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:white;padding:16px 5%;gap:16px;border-bottom:1px solid #E5EDE8;z-index:99;';
+    }
+  });
+</script>
+
+</body>
+</html>
